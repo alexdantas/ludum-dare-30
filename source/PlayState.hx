@@ -33,7 +33,7 @@ class PlayState extends FlxState
 
 		this.player = new Player(300, 300);
 		add(this.player);
-		add(this.player.bullets);
+		add(this.player.weapon.group);
 
 		super.create();
 	}

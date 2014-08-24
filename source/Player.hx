@@ -7,6 +7,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.group.FlxGroup;
 import flixel.group.FlxTypedGroup;
+import flixel.addons.weapon.FlxWeapon;
 
 // Nice logging feature
 // Include this:
@@ -27,21 +28,23 @@ class Player extends FlxSprite
 {
 	// Tweakable stuff
 	private static inline var SPEED_RUN:Int       = 160;
-	private static inline var MAX_BULLETS:Int     = 50;
-	private static inline var TIMER_BULLETS:Float = 0.1; // seconds
+
+	private static inline var BULLET_MAX:Int       = 50;  // Max amount at once
+	private static inline var BULLET_SPEED:Int     = 400; // Pixels per second
+	private static inline var BULLET_FIRE_RATE:Int = 100; // Delay in milliseconds
 
 	// Variables
 
 	/**
-	 * Container for all Bullets
-	 * shot by this ship.
+	 * Container for all Bullets and logic for shooting them.
+	 * (also known as "Bullet Manager")
+	 *
+	 * It handles by itself all the details on firing bullets
+	 * (fire rate, making them disappear when out of bounds, etc)
+	 *
+	 * @note Make sure to add `weapon.group` group to the State!
 	 */
-	public var bullets:FlxTypedGroup<Bullet>;
-
-	/**
-	 * Timer that limits shooting bullets repeatedly.
-	 */
-	private var bulletTimer:FlxTimer;
+	public var weapon:FlxWeapon;
 
 	private var direction:PlayerDirection;
 
@@ -57,11 +60,10 @@ class Player extends FlxSprite
 
 		this.maxVelocity.x = this.maxVelocity.y = SPEED_RUN;
 
-		// Preloading all Bullets
-		this.bullets = new FlxTypedGroup<Bullet>(MAX_BULLETS);
-
-		for (i in 0...MAX_BULLETS)
-			bullets.add(new Bullet());
+		this.weapon = new FlxWeapon("default", this);
+		this.weapon.makePixelBullet(BULLET_MAX, 5, 5, FlxColor.GOLDENROD, 25, 0);
+		this.weapon.setBulletDirection(FlxWeapon.BULLET_UP, BULLET_SPEED);
+		this.weapon.setFireRate(BULLET_FIRE_RATE);
 
 		// How quickly you slow down when
 		// not pressing anything
@@ -69,10 +71,6 @@ class Player extends FlxSprite
 		this.drag.y = this.maxVelocity.y * 8;
 
 		this.direction = PlayerDirection.UP;
-
-		// Initializing with dummy duration,
-		// just so we can check its `finished` flag
-		this.bulletTimer = new FlxTimer(0.01);
 	}
 
 	override public function update():Void
@@ -103,21 +101,7 @@ class Player extends FlxSprite
 		}
 
 		if (FlxG.keys.anyPressed(["SPACE"]))
-		{
-			if (this.bulletTimer.finished)
-			{
-				this.bulletTimer.reset(TIMER_BULLETS);
-
-				var bullet:Bullet = bullets.getFirstAvailable();
-
-				if (bullet != null)
-				{
-					// Shooting centered on the player
-					bullet.fire(this.x + (this.width/2 - bullet.width/2),
-					            this.y);
-				}
-			}
-		}
+			this.weapon.fire();
 
 		// This NEEDS to be at the very end
 		// of this function.
