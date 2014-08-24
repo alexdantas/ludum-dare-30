@@ -53,11 +53,11 @@ class Registry
 	}
 
 	/**
-	 * Applies the changes made to the Registry on the disk.
+	 * Writes the changes made to the Registry on the disk.
 	 *
 	 * @note Make sure to do it so settings can be preserved!
 	 */
-	public static function save():Void
+	public static function apply():Void
 	{
 		if (Registry.save == null)
 			return;
