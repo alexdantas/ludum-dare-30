@@ -1,4 +1,4 @@
-package;
+package enemy;
 
 import flixel.FlxG;
 import flixel.FlxObject;

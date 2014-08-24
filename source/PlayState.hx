@@ -11,6 +11,8 @@ import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.group.FlxTypedGroup;
 
+import enemy.Enemy;
+
 /**
  * A FlxState which can be used for the actual gameplay.
  */
