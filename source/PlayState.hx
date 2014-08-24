@@ -11,6 +11,7 @@ import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.group.FlxTypedGroup;
 
+import enemy.Enemy;
 import enemy.Straight;
 
 /**
@@ -21,6 +22,8 @@ class PlayState extends FlxState
 	// All of these things are populated inside the map.
 	// They're created inside object `TiledArea` function `loadObjects()`
 	public var player:Player;
+
+	public var enemies:FlxTypedGroup<Enemy>;
 
 	/**
 	 * Function that is called up when to state is created to set it up.
@@ -39,8 +42,13 @@ class PlayState extends FlxState
 		add(this.player);
 		add(this.player.weapon.group);
 
-		add(new Straight(10, 10, true));
-		add(new Straight(50, 50, false));
+		this.enemies = new FlxTypedGroup<Enemy>();
+		this.enemies.add(new Straight(50, 50, false));
+		this.enemies.add(new Straight(100, 100, true));
+		this.enemies.add(new Straight(150, 10, false));
+		this.enemies.add(new Straight(200, 200, true));
+		add(this.enemies);
+
 		super.create();
 	}
 
@@ -60,6 +68,20 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+		FlxG.overlap(
+			this.player.weapon.group, this.enemies,
+			function(left:FlxObject, right:FlxObject):Void
+			{
+				var bullet:Player = cast left;
+				var enemy:Enemy   = cast right;
+
+				if (bullet.state == enemy.state)
+				{
+					bullet.exists = enemy.exists = false;
+				}
+			}
+		);
+
 		super.update();
 	}
 }
