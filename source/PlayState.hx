@@ -40,7 +40,7 @@ class PlayState extends FlxState
 
 		this.player = new Player(300, 300);
 		add(this.player);
-		add(this.player.weapon.group);
+		add(this.player.weapon.bullets);
 
 		this.enemies = new FlxTypedGroup<Enemy>();
 		this.enemies.add(new Straight(50, 50, false));
@@ -68,8 +68,8 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
-		FlxG.overlap(
-			this.player.weapon.group, this.enemies,
+		this.player.weapon.bulletsOverlap(
+			this.enemies,
 			function(left:FlxObject, right:FlxObject):Void
 			{
 				var bullet:Player = cast left;

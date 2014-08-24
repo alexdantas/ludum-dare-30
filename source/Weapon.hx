@@ -17,7 +17,7 @@ class Weapon
 	 * This should be added to your display and collision checked
 	 * against it.
 	 */
-	public var group:FlxTypedGroup<Bullet>;
+	public var bullets:FlxTypedGroup<Bullet>;
 
 	// Internal variables, use with caution
 
@@ -76,9 +76,9 @@ class Weapon
 
 		this.bulletSpeed = bulletSpeed;
 
-		this.group = new FlxTypedGroup<Bullet>(maxBullets);
+		this.bullets = new FlxTypedGroup<Bullet>(maxBullets);
 		for (i in 0...maxBullets)
-			this.group.add(new Bullet());
+			this.bullets.add(new Bullet());
 
 		this.bounds = FlxRect.get(0, 0, FlxG.width, FlxG.height);
 		this.offset = new FlxPoint(0, 0);
@@ -107,7 +107,7 @@ class Weapon
 		this.nextFire  = FlxG.game.ticks + Std.int(fireRate / FlxG.timeScale);
 
 		// Get a free bullet from the pool
-		this.currentBullet = this.group.getFirstAvailable();
+		this.currentBullet = this.bullets.getFirstAvailable();
 		if (this.currentBullet == null)
 			return false;
 
@@ -139,10 +139,10 @@ class Weapon
 	*/
 	public inline function bulletsOverlap(objectOrGroup:FlxBasic, ?notifyCallBack:FlxObject->FlxObject->Void, skipParent:Bool = true):Void
 	{
-		if (this.group == null || this.group.length == 0)
+		if (this.bullets == null || this.bullets.length == 0)
 			return;
 
-		FlxG.overlap(objectOrGroup, this.group, notifyCallBack);
+		FlxG.overlap(objectOrGroup, this.bullets, notifyCallBack);
 	}
 }
 
