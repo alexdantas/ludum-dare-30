@@ -1,18 +1,16 @@
 package;
 
 import flixel.FlxG;
-import openfl.Assets;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxObject;
-import flixel.text.FlxText;
-import flixel.ui.FlxButton;
-import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.group.FlxTypedGroup;
+import flash.system.System; // System.exit()
 
 import enemy.Enemy;
 import enemy.Straight;
+import enemy.Sine;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -44,9 +42,9 @@ class PlayState extends FlxState
 
 		this.enemies = new FlxTypedGroup<Enemy>();
 		this.enemies.add(new Straight(50, 50, false));
-		this.enemies.add(new Straight(100, 100, true));
+		this.enemies.add(new Sine(100, 100, true));
 		this.enemies.add(new Straight(150, 10, false));
-		this.enemies.add(new Straight(200, 200, true));
+		this.enemies.add(new Sine(200, 200, true));
 		add(this.enemies);
 
 		super.create();
@@ -68,6 +66,9 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+		if (FlxG.keys.pressed.ESCAPE)
+			System.exit(88);
+
 		this.player.weapon.bulletsOverlap(
 			this.enemies,
 			function(left:FlxObject, right:FlxObject):Void

@@ -2,6 +2,10 @@ package enemy;
 
 import flixel.util.FlxColor;
 
+/**
+ * Enemy that simply comes straight down from the
+ * top of the screen.
+ */
 class Straight extends Enemy
 {
 	// Tweakable stuff

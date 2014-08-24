@@ -15,14 +15,6 @@ import flixel.group.FlxTypedGroup;
 // And then call with any object:
 //Log.trace("test");
 
-enum PlayerDirection
-{
-	RIGHT;
-	LEFT;
-	UP;
-	DOWN;
-}
-
 class Player extends FlxSprite
 {
 	// Tweakable stuff
@@ -44,8 +36,6 @@ class Player extends FlxSprite
 	 * @note Make sure to add `weapon.group` group to the State!
 	 */
 	public var weapon:Weapon;
-
-	private var direction:PlayerDirection;
 
 	public var state:Bool;
 
@@ -76,7 +66,7 @@ class Player extends FlxSprite
 		this.drag.x = this.maxVelocity.x * 8;
 		this.drag.y = this.maxVelocity.y * 8;
 
-		this.direction = PlayerDirection.UP;
+		this.facing = FlxObject.UP;
 		this.state = true;
 	}
 
@@ -88,28 +78,27 @@ class Player extends FlxSprite
 		if (FlxG.keys.anyPressed(["LEFT", "A"]))
 		{
 			this.acceleration.x = -this.drag.x;
-			this.direction = PlayerDirection.LEFT;
+			this.facing = FlxObject.LEFT;
 		}
 		else if (FlxG.keys.anyPressed(["RIGHT", "D"]))
 		{
 			this.acceleration.x = this.drag.x;
-			this.direction = PlayerDirection.RIGHT;
+			this.facing = FlxObject.RIGHT;
 		}
 
 		if (FlxG.keys.anyPressed(["UP", "W"]))
 		{
 			this.acceleration.y = -this.drag.y;
-			this.direction = PlayerDirection.UP;
+			this.facing = FlxObject.UP;
 		}
 		else if (FlxG.keys.anyPressed(["DOWN", "S"]))
 		{
 			this.acceleration.y = this.drag.y;
-			this.direction = PlayerDirection.DOWN;
+			this.facing = FlxObject.DOWN;
 		}
 
 		if (FlxG.keys.anyPressed(["SPACE"]))
 			this.weapon.fire(this.state);
-
 
 		if (FlxG.keys.anyJustPressed(["Q"]))
 			this.toggleState();
