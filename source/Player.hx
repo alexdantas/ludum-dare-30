@@ -7,7 +7,6 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.group.FlxGroup;
 import flixel.group.FlxTypedGroup;
-import flixel.addons.weapon.FlxWeapon;
 
 // Nice logging feature
 // Include this:
@@ -22,12 +21,6 @@ enum PlayerDirection
 	LEFT;
 	UP;
 	DOWN;
-}
-
-enum PlayerState
-{
-	BLACK;
-	WHITE;
 }
 
 class Player extends FlxSprite
@@ -50,14 +43,11 @@ class Player extends FlxSprite
 	 *
 	 * @note Make sure to add `weapon.group` group to the State!
 	 */
-	public var weapon:FlxWeapon;
-
-	private var blackWeapon:FlxWeapon;
-	private var whiteWeapon:FlxWeapon;
+	public var weapon:Weapon;
 
 	private var direction:PlayerDirection;
 
-	public var state:PlayerState;
+	public var state:Bool;
 
 	private var blackSprite:FlxSprite;
 	private var whiteSprite:FlxSprite;
@@ -70,19 +60,16 @@ class Player extends FlxSprite
 	{
 		super(x, y);
 
+		this.blackSprite = new FlxSprite(0, 0, "assets/images/player_black.png");
+		this.whiteSprite = new FlxSprite(0, 0, "assets/images/player_white.png");
+
+		this.loadGraphicFromSprite(this.whiteSprite);
+
 		this.maxVelocity.x = this.maxVelocity.y = SPEED_RUN;
 
-		this.blackWeapon = new FlxWeapon("black", this);
-		this.blackWeapon.makePixelBullet(BULLET_MAX, 5, 5, FlxColor.BLACK, 25, 0);
-		this.blackWeapon.setBulletDirection(FlxWeapon.BULLET_UP, BULLET_SPEED);
-		this.blackWeapon.setFireRate(BULLET_FIRE_RATE);
-
-		this.whiteWeapon = new FlxWeapon("white", this);
-		this.whiteWeapon.makePixelBullet(BULLET_MAX, 5, 5, FlxColor.WHITE, 25, 0);
-		this.whiteWeapon.setBulletDirection(FlxWeapon.BULLET_UP, BULLET_SPEED);
-		this.whiteWeapon.setFireRate(BULLET_FIRE_RATE);
-
-		this.weapon = this.whiteWeapon;
+		this.weapon = new Weapon(this, BULLET_SPEED, BULLET_MAX);
+		this.weapon.fireRate = BULLET_FIRE_RATE;
+		this.weapon.offset.x = this.width/2;
 
 		// How quickly you slow down when
 		// not pressing anything
@@ -90,14 +77,7 @@ class Player extends FlxSprite
 		this.drag.y = this.maxVelocity.y * 8;
 
 		this.direction = PlayerDirection.UP;
-		this.state = PlayerState.WHITE;
-
-		this.blackSprite = new FlxSprite(0, 0, "assets/images/player_black.png");
-		this.whiteSprite = new FlxSprite(0, 0, "assets/images/player_white.png");
-
-		// Make square with (w, h)
-		//this.makeGraphic(50, 50, FlxColor.HOT_PINK);
-		this.loadGraphicFromSprite(this.whiteSprite);
+		this.state = true;
 	}
 
 	override public function update():Void
@@ -128,7 +108,8 @@ class Player extends FlxSprite
 		}
 
 		if (FlxG.keys.anyPressed(["SPACE"]))
-			this.weapon.fire();
+			this.weapon.fire(this.state);
+
 
 		if (FlxG.keys.anyJustPressed(["Q"]))
 			this.toggleState();
@@ -144,17 +125,15 @@ class Player extends FlxSprite
 
 	public function toggleState():Void
 	{
-		if (this.state == PlayerState.BLACK)
+		if (this.state == true)
 		{
-			this.state = PlayerState.WHITE;
-			this.loadGraphicFromSprite(this.whiteSprite);
-			this.weapon = this.whiteWeapon;
+			this.state = false;
+			this.loadGraphicFromSprite(this.blackSprite);
 		}
 		else
 		{
-			this.state = PlayerState.BLACK;
-			this.loadGraphicFromSprite(this.blackSprite);
-			this.weapon = this.blackWeapon;
+			this.state = true;
+			this.loadGraphicFromSprite(this.whiteSprite);
 		}
 	}
 }
