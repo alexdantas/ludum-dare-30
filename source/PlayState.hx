@@ -25,6 +25,8 @@ class PlayState extends FlxState
 	 */
 	override public function create():Void
 	{
+		FlxG.cameras.bgColor = FlxColor.GRAY;
+
 		// Nice Fade-In
 		FlxG.camera.fade(FlxColor.BLACK, 0.33, true);
 

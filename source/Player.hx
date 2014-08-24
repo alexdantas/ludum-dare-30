@@ -24,6 +24,12 @@ enum PlayerDirection
 	DOWN;
 }
 
+enum PlayerState
+{
+	BLACK;
+	WHITE;
+}
+
 class Player extends FlxSprite
 {
 	// Tweakable stuff
@@ -46,7 +52,16 @@ class Player extends FlxSprite
 	 */
 	public var weapon:FlxWeapon;
 
+	private var blackWeapon:FlxWeapon;
+	private var whiteWeapon:FlxWeapon;
+
 	private var direction:PlayerDirection;
+
+	public var state:PlayerState;
+
+	private var blackSprite:FlxSprite;
+	private var whiteSprite:FlxSprite;
+
 
 	/**
 	 * Creates a Player at #x and #y (in pixels).
@@ -55,15 +70,19 @@ class Player extends FlxSprite
 	{
 		super(x, y);
 
-		// Make square with (w, h)
-		this.makeGraphic(50, 50, FlxColor.HOT_PINK);
-
 		this.maxVelocity.x = this.maxVelocity.y = SPEED_RUN;
 
-		this.weapon = new FlxWeapon("default", this);
-		this.weapon.makePixelBullet(BULLET_MAX, 5, 5, FlxColor.GOLDENROD, 25, 0);
-		this.weapon.setBulletDirection(FlxWeapon.BULLET_UP, BULLET_SPEED);
-		this.weapon.setFireRate(BULLET_FIRE_RATE);
+		this.blackWeapon = new FlxWeapon("black", this);
+		this.blackWeapon.makePixelBullet(BULLET_MAX, 5, 5, FlxColor.BLACK, 25, 0);
+		this.blackWeapon.setBulletDirection(FlxWeapon.BULLET_UP, BULLET_SPEED);
+		this.blackWeapon.setFireRate(BULLET_FIRE_RATE);
+
+		this.whiteWeapon = new FlxWeapon("white", this);
+		this.whiteWeapon.makePixelBullet(BULLET_MAX, 5, 5, FlxColor.WHITE, 25, 0);
+		this.whiteWeapon.setBulletDirection(FlxWeapon.BULLET_UP, BULLET_SPEED);
+		this.whiteWeapon.setFireRate(BULLET_FIRE_RATE);
+
+		this.weapon = this.whiteWeapon;
 
 		// How quickly you slow down when
 		// not pressing anything
@@ -71,6 +90,14 @@ class Player extends FlxSprite
 		this.drag.y = this.maxVelocity.y * 8;
 
 		this.direction = PlayerDirection.UP;
+		this.state = PlayerState.WHITE;
+
+		this.blackSprite = new FlxSprite(0, 0, "assets/images/player_black.png");
+		this.whiteSprite = new FlxSprite(0, 0, "assets/images/player_white.png");
+
+		// Make square with (w, h)
+		//this.makeGraphic(50, 50, FlxColor.HOT_PINK);
+		this.loadGraphicFromSprite(this.whiteSprite);
 	}
 
 	override public function update():Void
@@ -103,6 +130,9 @@ class Player extends FlxSprite
 		if (FlxG.keys.anyPressed(["SPACE"]))
 			this.weapon.fire();
 
+		if (FlxG.keys.anyJustPressed(["Q"]))
+			this.toggleState();
+
 		// This NEEDS to be at the very end
 		// of this function.
 		// Otherwise the player won't move right.
@@ -110,6 +140,22 @@ class Player extends FlxSprite
 		// Thanks:
 		// http://chipacabra.blogspot.de/2010/12/project-jumper-part-2.html
 		super.update();
+	}
+
+	public function toggleState():Void
+	{
+		if (this.state == PlayerState.BLACK)
+		{
+			this.state = PlayerState.WHITE;
+			this.loadGraphicFromSprite(this.whiteSprite);
+			this.weapon = this.whiteWeapon;
+		}
+		else
+		{
+			this.state = PlayerState.BLACK;
+			this.loadGraphicFromSprite(this.blackSprite);
+			this.weapon = this.blackWeapon;
+		}
 	}
 }
 
