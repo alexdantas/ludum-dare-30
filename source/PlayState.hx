@@ -63,6 +63,20 @@ class PlayState extends FlxState
 		if (FlxG.keys.pressed.ESCAPE)
 			System.exit(88);
 
+		FlxG.overlap(
+			this.player, this.enemies,
+			function(left:FlxObject, right:FlxObject):Void
+			{
+				var player:Player = cast left;
+				var enemy:Enemy   = cast right;
+
+				if (player.state != enemy.state)
+				{
+					player.exists = enemy.exists = false;
+				}
+			}
+		);
+
 		this.player.weapon.bulletsOverlap(
 			this.enemies,
 			function(left:FlxObject, right:FlxObject):Void
