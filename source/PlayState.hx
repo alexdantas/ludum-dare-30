@@ -7,10 +7,8 @@ import flixel.FlxObject;
 import flixel.util.FlxColor;
 import flixel.group.FlxTypedGroup;
 import flash.system.System; // System.exit()
-
 import enemy.Enemy;
-import enemy.Straight;
-import enemy.Sine;
+import enemy.EnemyManager;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -21,7 +19,7 @@ class PlayState extends FlxState
 	// They're created inside object `TiledArea` function `loadObjects()`
 	public var player:Player;
 
-	public var enemies:FlxTypedGroup<Enemy>;
+	public var enemies:EnemyManager;
 
 	/**
 	 * Function that is called up when to state is created to set it up.
@@ -40,11 +38,7 @@ class PlayState extends FlxState
 		add(this.player);
 		add(this.player.weapon.bullets);
 
-		this.enemies = new FlxTypedGroup<Enemy>();
-		this.enemies.add(new Straight(50, 50, false));
-		this.enemies.add(new Sine(100, 100, true));
-		this.enemies.add(new Straight(150, 10, false));
-		this.enemies.add(new Sine(200, 200, true));
+		this.enemies = new EnemyManager();
 		add(this.enemies);
 
 		super.create();

@@ -1,5 +1,6 @@
 package enemy;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 
 class Enemy extends FlxSprite
@@ -15,6 +16,13 @@ class Enemy extends FlxSprite
 		super(x, y);
 
 		this.state = state;
+	}
+	override public function update():Void
+	{
+		if (this.y > FlxG.height)
+			this.exists = false;
+
+		super.update();
 	}
 }
 

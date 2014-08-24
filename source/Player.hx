@@ -18,7 +18,7 @@ import flixel.group.FlxTypedGroup;
 class Player extends FlxSprite
 {
 	// Tweakable stuff
-	private static inline var SPEED_RUN:Int       = 160;
+	private static inline var SPEED_RUN:Int       = 220;
 
 	private static inline var BULLET_MAX:Int       = 50;  // Max amount at once
 	private static inline var BULLET_SPEED:Int     = 400; // Pixels per second
