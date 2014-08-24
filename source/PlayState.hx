@@ -37,6 +37,8 @@ class PlayState extends FlxState
 		add(this.player);
 		add(this.player.weapon.group);
 
+		add(new Enemy(10, 10, true));
+		add(new Enemy(50, 50, false));
 		super.create();
 	}
 
