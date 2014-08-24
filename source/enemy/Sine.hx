@@ -22,9 +22,12 @@ class Sine extends Enemy
 		super(x, y, state);
 
 		// Make square with (w, h)
-		this.makeGraphic(20, 20, (state == false ?
-		                          FlxColor.BLACK :
-		                          FlxColor.WHITE));
+		if (state == false)
+			this.loadGraphic("assets/images/enemy_medium_black.png");
+		else
+			this.loadGraphic("assets/images/enemy_medium_white.png");
+
+		this.angle = 180;
 
 		this.drag.x = SPEED_HORIZONTAL;
 		this.drag.y = SPEED_VERTICAL;
