@@ -27,11 +27,23 @@ class Player extends FlxSprite
 {
 	// Tweakable stuff
 	private static inline var SPEED_RUN:Int       = 160;
+	private static inline var MAX_BULLETS:Int     = 50;
+	private static inline var TIMER_BULLETS:Float = 0.1; // seconds
 
 	// Variables
-	private var direction:PlayerDirection;
 
-	// Functions
+	/**
+	 * Container for all Bullets
+	 * shot by this ship.
+	 */
+	public var bullets:FlxTypedGroup<Bullet>;
+
+	/**
+	 * Timer that limits shooting bullets repeatedly.
+	 */
+	private var bulletTimer:FlxTimer;
+
+	private var direction:PlayerDirection;
 
 	/**
 	 * Creates a Player at #x and #y (in pixels).
@@ -45,12 +57,22 @@ class Player extends FlxSprite
 
 		this.maxVelocity.x = this.maxVelocity.y = SPEED_RUN;
 
+		// Preloading all Bullets
+		this.bullets = new FlxTypedGroup<Bullet>(MAX_BULLETS);
+
+		for (i in 0...MAX_BULLETS)
+			bullets.add(new Bullet());
+
 		// How quickly you slow down when
 		// not pressing anything
 		this.drag.x = this.maxVelocity.x * 8;
 		this.drag.y = this.maxVelocity.y * 8;
 
 		this.direction = PlayerDirection.UP;
+
+		// Initializing with dummy duration,
+		// just so we can check its `finished` flag
+		this.bulletTimer = new FlxTimer(0.01);
 	}
 
 	override public function update():Void
@@ -78,6 +100,23 @@ class Player extends FlxSprite
 		{
 			this.acceleration.y = this.drag.y;
 			this.direction = PlayerDirection.DOWN;
+		}
+
+		if (FlxG.keys.anyPressed(["SPACE"]))
+		{
+			if (this.bulletTimer.finished)
+			{
+				this.bulletTimer.reset(TIMER_BULLETS);
+
+				var bullet:Bullet = bullets.getFirstAvailable();
+
+				if (bullet != null)
+				{
+					// Shooting centered on the player
+					bullet.fire(this.x + (this.width/2 - bullet.width/2),
+					            this.y);
+				}
+			}
 		}
 
 		// This NEEDS to be at the very end
