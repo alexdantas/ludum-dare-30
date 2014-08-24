@@ -11,7 +11,7 @@ import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.group.FlxTypedGroup;
 
-import enemy.Enemy;
+import enemy.Straight;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -39,8 +39,8 @@ class PlayState extends FlxState
 		add(this.player);
 		add(this.player.weapon.group);
 
-		add(new Enemy(10, 10, true));
-		add(new Enemy(50, 50, false));
+		add(new Straight(10, 10, true));
+		add(new Straight(50, 50, false));
 		super.create();
 	}
 
