@@ -17,9 +17,12 @@ class Straight extends Enemy
 		super(x, y, state);
 
 		// Make square with (w, h)
-		this.makeGraphic(20, 20, (state == false ?
-		                          FlxColor.BLACK :
-		                          FlxColor.WHITE));
+		if (state == false)
+			this.loadGraphic("assets/images/enemy_small_black.png");
+		else
+			this.loadGraphic("assets/images/enemy_small_white.png");
+
+		this.angle = 180;
 
 		this.maxVelocity.x = this.maxVelocity.y = SPEED_RUN;
 

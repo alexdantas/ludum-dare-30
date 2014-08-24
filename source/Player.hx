@@ -100,7 +100,7 @@ class Player extends FlxSprite
 		if (FlxG.keys.anyPressed(["SPACE"]))
 			this.weapon.fire(this.state);
 
-		if (FlxG.keys.anyJustPressed(["Q"]))
+		if (FlxG.keys.anyJustPressed(["Q", "SHIFT"]))
 			this.toggleState();
 
 		// This NEEDS to be at the very end
