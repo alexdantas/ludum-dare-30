@@ -142,7 +142,7 @@ class Weapon
 		if (this.bullets == null || this.bullets.length == 0)
 			return;
 
-		FlxG.overlap(objectOrGroup, this.bullets, notifyCallBack);
+		FlxG.overlap(this.bullets, objectOrGroup, notifyCallBack);
 	}
 }
 

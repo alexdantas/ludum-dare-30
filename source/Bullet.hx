@@ -20,6 +20,7 @@ class Bullet extends FlxSprite
 		super(0, 0);
 
 		this.bounds = null;
+		this.state  = false;
 
 		// Make it ready for
 		// pool allocation straight away
@@ -39,8 +40,10 @@ class Bullet extends FlxSprite
 			 FlxColor.WHITE)
 		);
 
+		// Constantly moving up
 		this.velocity.y = -speed;
 
+		// Ready for collision checks!
 		this.exists = true;
 	}
 
