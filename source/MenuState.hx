@@ -12,6 +12,7 @@ import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIRadioGroup;
 import flixel.addons.ui.interfaces.IFlxUIWidget;
 import firetongue.FireTongue;
+import flash.system.System; // System.exit()
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -91,7 +92,9 @@ class MenuState extends FlxUIState
 					                 });
 
 				case "quit":
-					// What the fuck should I do?
+					// I don't know if this is safe at all,
+					// but at least its something.
+					System.exit(0);
 				}
 			}
 

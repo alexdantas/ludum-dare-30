@@ -96,7 +96,9 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		if (FlxG.keys.pressed.ESCAPE)
-			System.exit(88);
+			// I don't know if this is safe at all,
+			// but at least its something.
+			System.exit(0);
 
 		// Arbitrary way to increase score
 		if (FlxG.game.ticks % 5 == 0)

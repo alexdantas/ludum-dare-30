@@ -26,12 +26,22 @@
 
   <!-- Button that starts the game -->
   <button
-	  center_x="true" center_y="true"
-	  x="0" y="0"
+	  center_x="true"
+	  x="0" y="100"
 	  use_def="text_button_wide"
 	  label="$BUTTON_START_GAME"
 	  >
 	<param type="string" value="start"/>
+  </button>
+
+  <!-- Button that quits the game -->
+  <button
+	  center_x="true"
+	  x="0" y="155"
+	  use_def="text_button_wide"
+	  label="$BUTTON_QUIT_GAME"
+	  >
+	<param type="string" value="quit"/>
   </button>
 
   <!-- Radio to select the game language -->
