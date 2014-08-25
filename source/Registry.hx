@@ -12,6 +12,9 @@ import flixel.util.FlxSave;
  */
 class Registry
 {
+	public static var shipsDestroyed:Int   = 0;
+	public static var distanceTraveled:Int = 0;
+
 	/**
 	 * Container for data to be preserved between executions.
 	 *

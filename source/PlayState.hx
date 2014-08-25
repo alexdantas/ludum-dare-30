@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxObject;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxTypedGroup;
 import flash.system.System; // System.exit()
@@ -21,6 +22,13 @@ class PlayState extends FlxState
 
 	public var enemies:EnemyManager;
 
+	private var shipsDestroyedText:FlxText;
+	private var distanceTraveledText:FlxText;
+
+	// // TODO: Make stars on the background
+	// private var stars:FlxEmitter;
+	// private var star:FlxParticle;
+
 	/**
 	 * Function that is called up when to state is created to set it up.
 	 */
@@ -34,12 +42,39 @@ class PlayState extends FlxState
 		// Misc. game settings
 		FlxG.mouse.visible = false;
 
+		// Reset score!
+		Registry.shipsDestroyed   = 0;
+		Registry.distanceTraveled = 0;
+
 		this.player = new Player(300, 300);
 		add(this.player);
 		add(this.player.weapon.bullets);
 
 		this.enemies = new EnemyManager();
 		add(this.enemies);
+
+		// // TODO: Make stars on the background
+		// this.stars = new FlxEmitter(0, 0, 100);
+		// this.stars.setSize(FlxG.width, 1);
+
+		// this.stars.setYSpeed(50, 100);
+		// for (i in 0...this.stars.maxSize)
+		// {
+		// 	this.star = new FlxParticle();
+		// 	this.star.makeGraphic(2, 2, FlxColor.WHITE);
+		// 	this.stars.add(this.star);
+		// }
+		// // Parameters: Explode, Lifespan, Emit rate (seconds)
+		// this.stars.start(false, 3, 0.01);
+		// add(this.stars);
+
+		this.shipsDestroyedText = new FlxText(10, 5);
+		this.shipsDestroyedText.size = 18;
+		this.distanceTraveledText = new FlxText(10, 25);
+		this.distanceTraveledText.size = 18;
+
+		add(this.shipsDestroyedText);
+		add(this.distanceTraveledText);
 
 		super.create();
 	}
@@ -63,6 +98,10 @@ class PlayState extends FlxState
 		if (FlxG.keys.pressed.ESCAPE)
 			System.exit(88);
 
+		// Arbitrary way to increase score
+		if (FlxG.game.ticks % 5 == 0)
+			Registry.distanceTraveled += 1;
+
 		FlxG.overlap(
 			this.player, this.enemies,
 			function(left:FlxObject, right:FlxObject):Void
@@ -73,6 +112,7 @@ class PlayState extends FlxState
 				if (player.state != enemy.state)
 				{
 					player.exists = enemy.exists = false;
+					Registry.shipsDestroyed += 1;
 				}
 			}
 		);
@@ -87,9 +127,13 @@ class PlayState extends FlxState
 				if (bullet.state == enemy.state)
 				{
 					bullet.exists = enemy.exists = false;
+					Registry.shipsDestroyed += 1;
 				}
 			}
 		);
+
+		this.shipsDestroyedText.text   = "Ships: " + Registry.shipsDestroyed;
+		this.distanceTraveledText.text = "Distance: " + Registry.distanceTraveled;
 
 		super.update();
 	}
