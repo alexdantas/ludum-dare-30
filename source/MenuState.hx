@@ -11,7 +11,6 @@ import flixel.util.FlxSave;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIRadioGroup;
 import flixel.addons.ui.interfaces.IFlxUIWidget;
-import flash.system.System; // System.exit()
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -74,15 +73,18 @@ class MenuState extends FlxUIState
 				switch (cast(params[0], String))
 				{
 				case "start":
-					FlxG.camera.fade(FlxColor.BLACK, .33, false, function()
+					// Fade out to the next state!
+					FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function()
 					                 {
 						                 FlxG.switchState(new PlayState());
 					                 });
 
 				case "quit":
-					// I don't know if this is safe at all,
-					// but at least its something.
-					System.exit(0);
+					// Fade out to the Desktop
+					FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function()
+					                 {
+						                 Main.exitGame();
+					                 });
 				}
 			}
 

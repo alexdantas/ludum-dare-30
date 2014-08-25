@@ -7,7 +7,6 @@ import flixel.FlxObject;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxTypedGroup;
-import flash.system.System; // System.exit()
 import enemy.Enemy;
 import enemy.EnemyManager;
 import firetongue.FireTongue;
@@ -98,9 +97,13 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		if (FlxG.keys.pressed.ESCAPE)
-			// I don't know if this is safe at all,
-			// but at least its something.
-			System.exit(0);
+		{
+			// Fade out to the Desktop
+			FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function()
+			                 {
+				                 Main.exitGame();
+			                 });
+		}
 
 		// Arbitrary way to increase score
 		if (FlxG.game.ticks % 5 == 0)

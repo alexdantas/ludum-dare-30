@@ -7,6 +7,7 @@ import flash.events.Event;
 import flash.Lib;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flash.system.System; // System.exit()
 
 class Main extends Sprite
 {
@@ -37,9 +38,19 @@ class Main extends Sprite
 	var initialState:Class<FlxState> = MenuState;
 #end
 
-	// You can pretty much ignore everything from here on - your code
-	// should go in your states.
+	/**
+	 * Forcibly and immediately exits the program.
+	 */
+	public static function exitGame():Void
+	{
+		// I don't know if this is safe at all,
+		// but at least its something.
+		System.exit(0);
+	}
 
+	/**
+	 * Start the program from here.
+	 */
 	public static function main():Void
 	{
 		Lib.current.addChild(new Main());
