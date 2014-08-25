@@ -42,7 +42,7 @@
 
   <set name="BUILD_DIR" value="export" />
   <classpath name="source"             />
-  <assets path="assets"                />
+  <assets path="assets" include="*"    />
 
   <!-- LIBRARIES -->
 
@@ -74,5 +74,7 @@
 
   <!-- Place custom nodes like icons here (higher priority to override the
        HaxeFlixel icon) -->
+  <icon path="icon.png" width="50" height="50" />
+
 </project>
 

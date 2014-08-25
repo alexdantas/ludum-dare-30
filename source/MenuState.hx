@@ -74,17 +74,22 @@ class MenuState extends FlxUIState
 				{
 				case "start":
 					// Fade out to the next state!
-					FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function()
-					                 {
-						                 FlxG.switchState(new PlayState());
-					                 });
-
+					FlxG.camera.fade(
+						FlxColor.BLACK, 0.33, false,
+						function()
+						{
+							FlxG.switchState(new PlayState());
+						}
+					);
 				case "quit":
 					// Fade out to the Desktop
-					FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function()
-					                 {
-						                 Main.exitGame();
-					                 });
+					FlxG.camera.fade(
+						FlxColor.BLACK, 0.33, false,
+						function()
+						{
+							Main.exitGame();
+						}
+					);
 				}
 			}
 

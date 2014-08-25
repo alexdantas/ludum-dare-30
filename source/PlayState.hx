@@ -99,14 +99,17 @@ class PlayState extends FlxState
 		if (FlxG.keys.pressed.ESCAPE)
 		{
 			// Fade out to the Desktop
-			FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function()
-			                 {
-				                 Main.exitGame();
-			                 });
+			FlxG.camera.fade(
+				FlxColor.BLACK, 0.33, false,
+				function()
+				{
+					Main.exitGame();
+				}
+			);
 		}
 
 		// Arbitrary way to increase score
-		if (FlxG.game.ticks % 5 == 0)
+		if (FlxG.game.ticks % 200 == 0)
 			Registry.distanceTraveled += 1;
 
 		FlxG.overlap(
