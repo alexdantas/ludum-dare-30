@@ -26,8 +26,6 @@ class PlayState extends FlxState
 	private var shipsDestroyedText:FlxText;
 	private var distanceTraveledText:FlxText;
 
-	private var gameOverText:FlxText;
-
 	// // TODO: Make stars on the background
 	// private var stars:FlxEmitter;
 	// private var star:FlxParticle;
@@ -80,12 +78,6 @@ class PlayState extends FlxState
 		add(this.shipsDestroyedText);
 		add(this.distanceTraveledText);
 
-		this.gameOverText = new FlxText(200, 200);
-		this.gameOverText.size = 36;
-		this.gameOverText.text = Registry.language.get("$GAME_OVER", "ui");
-		// Won't get added now
-		// Will only show when game is over
-
 		super.create();
 	}
 
@@ -105,6 +97,8 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+		// Input
+
 		if (FlxG.keys.pressed.ESCAPE)
 		{
 			// Fade out to the Desktop
@@ -117,10 +111,12 @@ class PlayState extends FlxState
 			);
 		}
 
+		if (FlxG.keys.anyJustPressed(["P", "ENTER"]))
+			this.openSubState(new PauseState());
+
 		// Arbitrary way to increase score
 		if (FlxG.game.ticks % 200 == 0)
-			if (player.exists)
-				Registry.distanceTraveled += 1;
+			Registry.distanceTraveled += 1;
 
 		// Is the Game Over?
 		FlxG.overlap(
@@ -135,25 +131,10 @@ class PlayState extends FlxState
 					player.exists = enemy.exists = false;
 					Registry.shipsDestroyed += 1;
 
-					add(gameOverText);
+					this.openSubState(new GameOverState());
 				}
 			}
 		);
-		// Yes, it is!
-		if (! player.exists)
-		{
-			if (FlxG.keys.anyPressed(["SPACE", "ENTER"]))
-			{
-				// Restart game!
-				FlxG.camera.fade(
-					FlxColor.BLACK, 0.33, false,
-					function()
-					{
-						FlxG.switchState(new PlayState());
-					}
-				);
-			}
-		}
 
 		this.player.weapon.bulletsOverlap(
 			this.enemies,

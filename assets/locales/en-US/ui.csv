@@ -4,3 +4,4 @@
 "$INGAME_SHIPS_DESTROYED","Enemies: <X>",
 "$INGAME_DISTANCE_TRAVELED","Distance: <X>",
 "$GAME_OVER","Game Over",
+"$PAUSED","Paused",
