@@ -121,7 +121,7 @@ class PlayState extends FlxState
 			this.enemies,
 			function(left:FlxObject, right:FlxObject):Void
 			{
-				var bullet:Player = cast left;
+				var bullet:Bullet = cast left;
 				var enemy:Enemy   = cast right;
 
 				if (bullet.state == enemy.state)
