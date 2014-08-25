@@ -1,6 +1,8 @@
 package;
 
 import flixel.util.FlxSave;
+import firetongue.FireTongue;
+import flixel.addons.ui.FlxUIState;
 
 /**
  * Contains data to be used globally on the game.
@@ -12,8 +14,13 @@ import flixel.util.FlxSave;
  */
 class Registry
 {
-	public static var shipsDestroyed:Int   = 0;
-	public static var distanceTraveled:Int = 0;
+	/**
+	 * Language used to translate all in-game texts.
+	 */
+	public static var language:MyFireTongue = null;
+
+	public static var shipsDestroyed   :Int = 0;
+	public static var distanceTraveled :Int = 0;
 
 	/**
 	 * Container for data to be preserved between executions.
@@ -51,8 +58,19 @@ class Registry
 
 		// Setting all default variables
 
-		if (Registry.save.data.language == null)
-			Registry.save.data.language = "en-US";
+		if (Registry.save.data.locale == null)
+			Registry.save.data.locale = "en-US";
+
+		// Setting up the language
+		// (Firetongue instance on the `Registry` class)
+		if (Registry.language == null)
+		{
+			Registry.language = new MyFireTongue();
+			Registry.language.init(Registry.save.data.locale);
+
+			// All states will use this tongue.
+			FlxUIState.static_tongue = Registry.language;
+		}
 	}
 
 	/**

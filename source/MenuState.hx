@@ -11,7 +11,6 @@ import flixel.util.FlxSave;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIRadioGroup;
 import flixel.addons.ui.interfaces.IFlxUIWidget;
-import firetongue.FireTongue;
 import flash.system.System; // System.exit()
 
 /**
@@ -27,17 +26,6 @@ class MenuState extends FlxUIState
 	 */
 	override public function create():Void
 	{
-		// Setting up the language - a Firetongue
-		// instance on the `Main` class
-		if (Main.tongue == null)
-		{
-			Main.tongue = new FireTongueEx();
-			Main.tongue.init(Registry.save.data.language);
-
-			// All FlxUIStates will use this tongue
-			FlxUIState.static_tongue = Main.tongue;
-		}
-
 		// Which XML file to use when building UI
 		// (must be inside "assets/xml")
 		_xml_id = "main_menu";
@@ -75,8 +63,8 @@ class MenuState extends FlxUIState
 			var radio:FlxUIRadioGroup = cast _ui.getAsset("locale_radio");
 			if (radio != null)
 			{
-				if (Main.tongue != null)
-					radio.selectedId = Main.tongue.locale.toLowerCase();
+				if (Registry.language != null)
+					radio.selectedId = Registry.language.locale.toLowerCase();
 			}
 
 		case "click_button":
@@ -103,9 +91,11 @@ class MenuState extends FlxUIState
 		case "click_radio_group":
 			var id:String = cast data;
 
-			if (Main.tongue != null)
+			if (Registry.language != null)
 			{
-				Main.tongue.init(id, reloadState); // callback
+				// Restart with other language,
+				// calling function when done
+				Registry.language.init(id, reloadState);
 
 				Registry.save.data.language = id;
 				Registry.apply();

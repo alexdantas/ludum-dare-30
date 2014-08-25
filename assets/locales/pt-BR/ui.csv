@@ -1,3 +1,5 @@
 "flag","content",
 "$BUTTON_START_GAME","Começar Jogo",
 "$BUTTON_QUIT_GAME","Sair",
+"$INGAME_SHIPS_DESTROYED","Inimigos: <X>",
+"$INGAME_DISTANCE_TRAVELED","Distância: <X>",

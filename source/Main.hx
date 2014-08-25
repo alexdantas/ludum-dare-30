@@ -7,12 +7,9 @@ import flash.events.Event;
 import flash.Lib;
 import flixel.FlxGame;
 import flixel.FlxState;
-import firetongue.FireTongue;
 
 class Main extends Sprite
 {
-	public static var tongue:FireTongueEx;
-
 	// Width/height of the game in pixels
 	// (might be less / more in actual
 	//  pixels depending on your zoom).
@@ -88,6 +85,8 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
+		// Initializing and loading all game settings
+		// (including the language)
 		Registry.initialize();
 
 		addChild(

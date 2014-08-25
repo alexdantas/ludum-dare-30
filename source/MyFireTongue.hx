@@ -25,7 +25,7 @@ import flixel.addons.ui.interfaces.IFireTongue;
  *     The actual extended class does nothing, it just falls through to FireTongue.
  *
  */
-class FireTongueEx extends FireTongue implements IFireTongue
+class MyFireTongue extends FireTongue implements IFireTongue
 {
 	public function new()
 	{

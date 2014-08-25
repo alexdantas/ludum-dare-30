@@ -10,6 +10,8 @@ import flixel.group.FlxTypedGroup;
 import flash.system.System; // System.exit()
 import enemy.Enemy;
 import enemy.EnemyManager;
+import firetongue.FireTongue;
+import firetongue.Replace;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -134,8 +136,23 @@ class PlayState extends FlxState
 			}
 		);
 
-		this.shipsDestroyedText.text   = "Ships: " + Registry.shipsDestroyed;
-		this.distanceTraveledText.text = "Distance: " + Registry.distanceTraveled;
+		// The text needs to be internationalized, so we
+		// use Firetongue to replace variables on the strings
+		var tmp:String;
+
+		tmp = Registry.language.get("$INGAME_SHIPS_DESTROYED", "ui");
+		this.shipsDestroyedText.text = Replace.flags(
+			tmp,
+			["<X>"],
+			[Std.string(Registry.shipsDestroyed)]
+		);
+
+		tmp = Registry.language.get("$INGAME_DISTANCE_TRAVELED", "ui");
+		this.distanceTraveledText.text = Replace.flags(
+			tmp,
+			["<X>"],
+			[Std.string(Registry.distanceTraveled)]
+		);
 
 		super.update();
 	}
