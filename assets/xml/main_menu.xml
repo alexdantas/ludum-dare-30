@@ -2,6 +2,9 @@
 <data>
   <include id="_definitions" />
 
+  <!-- Background -->
+  <sprite src="main_menu_bg" x="0" y="0" />
+
   <!-- Button that starts the game -->
   <button
 	  center_x="true"

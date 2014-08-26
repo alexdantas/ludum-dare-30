@@ -100,6 +100,8 @@ class Main extends Sprite
 		// (including the language)
 		Registry.initialize();
 
+		startFullscreen = Registry.save.data.fullscreen;
+
 		addChild(
 			new FlxGame(
 				gameWidth, gameHeight,

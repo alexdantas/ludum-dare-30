@@ -71,6 +71,9 @@ class Registry
 			// All states will use this tongue.
 			FlxUIState.static_tongue = Registry.language;
 		}
+
+		if (Registry.save.data.fullscreen == null)
+			Registry.save.data.fullscreen = false;
 	}
 
 	/**

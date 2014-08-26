@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIRadioGroup;
+import flixel.addons.ui.FlxUICheckBox;
 
 class MenuOptionsState extends FlxUIState
 {
@@ -28,6 +29,10 @@ class MenuOptionsState extends FlxUIState
 					radio.selectedId = Registry.language.locale.toLowerCase();
 			}
 
+			var checkbox:FlxUICheckBox = cast _ui.getAsset("fullscreen_toggle");
+			if (checkbox != null)
+				checkbox.checked = FlxG.fullscreen;
+
 		case "click_button":
 			if (params != null && params.length > 0)
 			{
@@ -35,6 +40,19 @@ class MenuOptionsState extends FlxUIState
 
 				if (command == "back")
 					FlxG.switchState(new MenuState());
+			}
+
+		case "click_check_box":
+			if (params != null && params.length > 0)
+			{
+				var command:String = cast params[0];
+
+				if (command == "fullscreen")
+				{
+					FlxG.fullscreen = !FlxG.fullscreen;
+					Registry.save.data.fullscreen = FlxG.fullscreen;
+					Registry.apply();
+				}
 			}
 
 		// When selecting the language, immediately
