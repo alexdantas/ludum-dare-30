@@ -7,8 +7,7 @@
 
   <!-- Button that starts the game -->
   <button
-	  center_x="true"
-	  x="0" y="100"
+	  x="30" y="200"
 	  use_def="text_button_wide"
 	  label="$BUTTON_START_GAME"
 	  >
@@ -17,8 +16,7 @@
 
   <!-- Button to the options pop-up -->
   <button
-	  center_x="true"
-	  x="0" y="155"
+	  x="30" y="255"
 	  use_def="text_button_wide"
 	  label="$BUTTON_OPTIONS"
 	  >
@@ -27,8 +25,7 @@
 
   <!-- Button that quits the game -->
   <button
-	  center_x="true"
-	  x="0" y="210"
+	  x="30" y="310"
 	  use_def="text_button_wide"
 	  label="$BUTTON_QUIT_GAME"
 	  >
