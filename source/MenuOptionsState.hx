@@ -14,7 +14,7 @@ class MenuOptionsState extends FlxUIState
 		super.create();
 	}
 
-	public override function getEvent(event:String, target:Dynamic, data:Array<Dynamic>, ?params:Array<Dynamic>):Void
+	public override function getEvent(event:String, target:Dynamic, data:Dynamic, ?params:Array<Dynamic>):Void
 	{
 		// Which Event just happened?
 		switch (event)
