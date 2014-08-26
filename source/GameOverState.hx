@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSubState;
 import flixel.text.FlxText;
+import flixel.util.FlxColor;
 
 /**
  * Sub state that shows a Game Over text while

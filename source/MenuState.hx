@@ -9,7 +9,6 @@ import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.util.FlxSave;
 import flixel.addons.ui.FlxUIState;
-import flixel.addons.ui.FlxUIRadioGroup;
 import flixel.addons.ui.interfaces.IFlxUIWidget;
 
 /**
@@ -56,16 +55,6 @@ class MenuState extends FlxUIState
 		// Which Event just happened?
 		switch (name)
 		{
-		// Right after we load, let's fill the
-		// Language Radio with the current language
-		case "finish_load":
-			var radio:FlxUIRadioGroup = cast _ui.getAsset("locale_radio");
-			if (radio != null)
-			{
-				if (Registry.language != null)
-					radio.selectedId = Registry.language.locale.toLowerCase();
-			}
-
 		case "click_button":
 			if (params != null && params.length > 0)
 			{
@@ -81,6 +70,9 @@ class MenuState extends FlxUIState
 							FlxG.switchState(new PlayState());
 						}
 					);
+				case "options":
+					FlxG.switchState(new MenuOptionsState());
+
 				case "quit":
 					// Fade out to the Desktop
 					FlxG.camera.fade(
@@ -92,27 +84,7 @@ class MenuState extends FlxUIState
 					);
 				}
 			}
-
-		// When selecting the language, immediately
-		// change it and reload the state
-		case "click_radio_group":
-			var id:String = cast data;
-
-			if (Registry.language != null)
-			{
-				// Restart with other language,
-				// calling function when done
-				Registry.language.init(id, reloadState);
-
-				Registry.save.data.language = id;
-				Registry.apply();
-			}
 		}
-	}
-
-	private function reloadState():Void
-	{
-		FlxG.switchState(new MenuState());
 	}
 }
 

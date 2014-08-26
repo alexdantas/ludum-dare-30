@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+
+  <!-- Moderate-sized font -->
+  <definition id="targa-16"
+			  font="targa"
+			  size="16"
+			  color="0xffffff"
+			  outline="0x000000"
+			  align="left"
+			  />
+
+  <!-- Text button wider than default -->
+  <definition id="text_button_wide"
+			  width="200"
+			  height="50"
+			  >
+	<text use_def="targa-16"
+		  align="center"
+		  >
+	  <color id="over"
+			 value="0xcccccc"
+			 />
+	</text>
+  </definition>
+
+
+</data>
+
